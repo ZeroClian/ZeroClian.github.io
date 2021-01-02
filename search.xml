@@ -152,4 +152,49 @@
         <tag>Spring</tag>
       </tags>
   </entry>
+  <entry>
+    <title>List、Set、Map三者的区别？</title>
+    <url>/2021/01/02/List%E3%80%81Set%E3%80%81Map%E4%B8%89%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/</url>
+    <content><![CDATA[<p>Java 容器分为 Collection 和 Map 两大类，Collection 集合的子接口有 Set、List、Queue 三种子接口，我们比较常用的Set、List，Map 接口不是 Collection 的子接口。<br><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/1609561439429-0560ff2e-6b53-4d14-ae32-d862c7ef10c8.png" alt="Java 容器"><br>Collection 集合主要有 List 和 Set :</p>
+<ul>
+<li>List ：一个有序的容器，元素可以重复，可以插入多个 null 值，元素都有索引。常用实现类为：ArrayList、LinkedList 和 Vector</li>
+<li>Set ：一个无序的容器，元素不可以重复，只允许存在一个 null 值，必须保证元素唯一性。常用实现类为：HashSet、LinkedHashSet 和 TreeSet。</li>
+</ul>
+<p>Map 是一个键值对集合，存储键、值之间的映射。Key 无序，唯一；Value 不要求有序，可重复。常用实现类：HashMap、TreeMap、HashTable、LinkeHashMap、ConcurrentHashMap。</p>
+<h2 id="底层数据结构"><a href="#底层数据结构" class="headerlink" title="底层数据结构"></a>底层数据结构</h2><ul>
+<li>list<ul>
+<li>ArrayList：Object 数组</li>
+<li>LinkedList：双向循环链表</li>
+<li>Vector：Object 数组</li>
+</ul>
+</li>
+<li>Set<ul>
+<li>HashSet：HashMap</li>
+<li>LinkedHashSet：LinkedHashMap（内部基于HashMap）</li>
+<li>TreeSet：红黑树</li>
+</ul>
+</li>
+<li>Map<ul>
+<li>HashMap： JDK1.8之前HashMap由数组+链表组成的，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）.JDK1.8以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树，以减少搜索时间。</li>
+<li>LinkedHashMap：LinkedHashMap 继承自 HashMap，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，LinkedHashMap 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。</li>
+<li>HashTable：数组+链表</li>
+<li>TreeMap：红黑树</li>
+</ul>
+</li>
+</ul>
+<h2 id="线程安全的集合类"><a href="#线程安全的集合类" class="headerlink" title="线程安全的集合类"></a>线程安全的集合类</h2><ul>
+<li>vector：就比arraylist多了个同步化机制（线程安全），因为效率较低，现在已经不太建议使用。在web应用中，特别是前台页面，往往效率（页面响应速度）是优先考虑的。</li>
+<li>statck：堆栈类，先进后出。</li>
+<li>hashtable：就比hashmap多了个线程安全。</li>
+<li>enumeration：枚举，相当于迭代器。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>面试必备</category>
+        <category>Java基础</category>
+      </categories>
+      <tags>
+        <tag>基础知识</tag>
+      </tags>
+  </entry>
 </search>
