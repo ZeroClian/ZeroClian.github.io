@@ -197,4 +197,104 @@
         <tag>基础知识</tag>
       </tags>
   </entry>
+  <entry>
+    <title>AarryList  和 LinkedList 的区别?</title>
+    <url>/2021/01/02/AarryList%20%20%E5%92%8C%20LinkedList%20%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="AarryList-和-LinkedList-的区别"><a href="#AarryList-和-LinkedList-的区别" class="headerlink" title="AarryList  和 LinkedList 的区别?"></a>AarryList  和 LinkedList 的区别?</h1><h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p>​    都是不同步的，也就是不保证线程安全</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
+<li>ArrayList ：使用 Object 数组</li>
+<li>LinkedList<ul>
+<li>JDK1.6之前使用双向循环链表</li>
+<li>JDK1.7取消了循环，使用双向链表</li>
+</ul>
+</li>
+</ul>
+<h2 id="其他区别"><a href="#其他区别" class="headerlink" title="其他区别"></a>其他区别</h2><ul>
+<li>ArrayList <ul>
+<li>支持快速随机访问</li>
+<li>需要预留一定的容量空间</li>
+</ul>
+</li>
+<li>LinkedList<ul>
+<li>不支持快速随机访问</li>
+<li>存储每一个元素都要消耗更多的空间</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>面试必备</category>
+        <category>Java基础</category>
+      </categories>
+      <tags>
+        <tag>基础知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试之——浅谈Spring MVC</title>
+    <url>/2021/01/02/%E9%9D%A2%E8%AF%95%E4%B9%8B%E2%80%94%E2%80%94%E6%B5%85%E8%B0%88Spring-MVC/</url>
+    <content><![CDATA[<h1 id="面试之——浅谈Spring-MVC"><a href="#面试之——浅谈Spring-MVC" class="headerlink" title="面试之——浅谈Spring MVC"></a>面试之——浅谈Spring MVC</h1><p>MVC 是一种设计模式，Spring MVC 是一款优秀的 MVC 框架，能够帮助我们进行更加便捷的 Web 层开发，在Spring MVC 下我们把后端项目分为 Service 层（处理业务）、Dao 层（数据库操作）、Entity 层（实体类）、Controller 层（控制层，返回数据给前端页面）。</p>
+<p>原理图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/image-20210102153954018.png" alt="Spring MVC"></p>
+<h2 id="Spring-MVC-工作原理"><a href="#Spring-MVC-工作原理" class="headerlink" title="Spring MVC 工作原理"></a>Spring MVC 工作原理</h2><p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/image-20210102154259946.png" alt="Spring MVC 工作原理"></p>
+<ol>
+<li>客户端发送请求，直接请求发送到 <code>DispatcherServlet</code>。</li>
+<li> <code>DispatcherServlet</code> 根据请求信息调用 <code>HandlerMapping</code>，解析请求对应的<code>Handler</code>。</li>
+<li>解析到对应的 Handler（即 Controller）后，开始由 HandlerAdapter 适配器处理。</li>
+<li><code>HandlerAdapter</code> 会根据 <code>Handler</code> 来调用真正的处理器开始处理请求，并处理相应的业务逻辑。</li>
+<li>处理器完成业务后，会返回一个 <code>ModelAndView</code> 对象，<code>Model</code> 是返回的数据对象，<code>View</code> 是个逻辑上的 <code>View</code>。</li>
+<li><code>ViewResolver</code> 会根据逻辑 <code>View</code> 查找实际的 <code>View</code>。</li>
+<li><code>DispaterServlet</code> 把返回的 <code>Model</code> 传给 <code>View</code> （视图渲染）。</li>
+<li>把 <code>View</code> 返回给请求者（客户端）。 </li>
+</ol>
+]]></content>
+      <categories>
+        <category>面试必备</category>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>浅谈 MySQL 事务</title>
+    <url>/2021/01/02/%E6%B5%85%E8%B0%88%20MySQL%20%E4%BA%8B%E5%8A%A1/</url>
+    <content><![CDATA[<h1 id="浅谈-MySQL-事务"><a href="#浅谈-MySQL-事务" class="headerlink" title="浅谈 MySQL 事务"></a>浅谈 MySQL 事务</h1><hr>
+<h2 id="什么是事务？"><a href="#什么是事务？" class="headerlink" title="什么是事务？"></a>什么是事务？</h2><ul>
+<li>事务是逻辑上的一组操作，要么全部执行，要么都不执行</li>
+</ul>
+<h2 id="事务的四大特性"><a href="#事务的四大特性" class="headerlink" title="事务的四大特性"></a>事务的四大特性</h2><ul>
+<li>原子性（Atomicity）：事务是最小的执行单位，不允许分割，原子性保证事务的动作要么全部成功，要么全部失败。</li>
+<li>一致性（Consistency）：执行事务前后，数据保持一致，多个事务对数据读取的结果是一致的。</li>
+<li>隔离性（Isolation）：并发访问数据库时，一个用户的事务不被其他事务所干扰，各种并发事务之间数据库是独立的。</li>
+<li>持久性（Durability）：一个事务被提交后，对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何的影响。</li>
+</ul>
+<h2 id="并发事务带来的问题"><a href="#并发事务带来的问题" class="headerlink" title="并发事务带来的问题"></a>并发事务带来的问题</h2><p>在典型的应⽤程序中，多个事务并发运⾏，经常会操作相同的数据来完成各⾃的任务（多个⽤户对同⼀数据进⾏操作）。并发虽然是必须的，但可能会导致以下的问题。</p>
+<ul>
+<li>脏读（<strong>Dirty read</strong>）**:** 当⼀个事务正在访问数据并且对数据进⾏了修改，⽽这种修改还没有提交到数据库中，这时另外⼀个事务也访问了这个数据，然后使⽤了这个数据。因为这个数据是还没有提交的数据，那么另外⼀个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</li>
+<li>丢失修改（<strong>Lost to modify</strong>）**:** 指在⼀个事务读取⼀个数据时，另外⼀个事务也访问了该数据，那么在第⼀个事务中修改了这个数据后，第⼆个事务也修改了这个数据。这样第⼀个事务内的修改结果就被丢失，因此称为丢失修改。 例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=19，事务1的修改被丢失。</li>
+<li>不可重复读（<strong>Unrepeatableread</strong>）**:** 指在⼀个事务内多次读同⼀数据。在这个事务还没有结束时，另⼀个事务也访问该数据。那么，在第⼀个事务中的两次读数据之间，由于第⼆个事务的修改导致第⼀个事务两次读取的数据可能不太⼀样。这就发⽣了在⼀个事务内两次读到的数据是不⼀样的情况，因此称为不可重复读。</li>
+<li>幻读（<strong>Phantom read</strong>）**:** 幻读与不可重复读类似。它发⽣在⼀个事务（T1）读取了⼏⾏数据，接着另⼀个并发事务（T2）插⼊了⼀些数据时。在随后的查询中，第⼀个事务（T1）就会发现多了⼀些原本不存在的记录，就好像发⽣了幻觉⼀样，所以称为幻读。</li>
+</ul>
+<p><strong>不可重复读和幻读区别：</strong></p>
+<p>​        不可重复读的重点是修改⽐如多次读取⼀条记录发现其中某些列的值被修改，幻读的重点在于新增或者删除⽐如多次读取⼀条记录发现记录增多或减少了。</p>
+<hr>
+<h2 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h2><p>SQL 标准定义了四个隔离级别：</p>
+<ul>
+<li>**READ-UNCOMMITTED(读取未提交)**：最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读。</li>
+<li>**READ-COMMITTED(读取已提交)**： 允许读取并发事务已经提交的数据，可以阻⽌脏读，但是幻读或不可重复读仍有可能发⽣。</li>
+<li>**REPEATABLE-READ(可重复读)**： 对同⼀字段的多次读取结果都是⼀致的，除⾮数据是被本身事务⾃⼰所修改，可以阻⽌脏读和不可重复读，但幻读仍有可能发⽣。</li>
+<li>**SERIALIZABLE(可串⾏化)**： 最⾼的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执⾏，这样事务之间就完全不可能产⽣⼲扰，也就是说，该级别可以防⽌脏读、不可重复读以及幻读。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/image-20210102165004946.png" alt="隔离级别"></p>
+<p>MySQL InnoDB 存储引擎的默认⽀持的隔离级别是 <strong>REPEATABLE-READ</strong>（可重读）。我们可以通过<code>SELECT @@tx_isolation;</code> 命令来查看。</p>
+]]></content>
+      <categories>
+        <category>面试必备</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
 </search>
