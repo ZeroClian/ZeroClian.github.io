@@ -297,4 +297,26 @@
         <tag>Spring</tag>
       </tags>
   </entry>
+  <entry>
+    <title>简闻——新闻查看APP</title>
+    <url>/2020/01/04/%E7%AE%80%E9%97%BB%E2%80%94%E2%80%94%E6%96%B0%E9%97%BB%E6%9F%A5%E7%9C%8BAPP/</url>
+    <content><![CDATA[<h1 id="简闻——新闻查看APP"><a href="#简闻——新闻查看APP" class="headerlink" title="简闻——新闻查看APP"></a>简闻——新闻查看APP</h1><h2 id="一、实现功能"><a href="#一、实现功能" class="headerlink" title="一、实现功能"></a>一、实现功能</h2><ol>
+<li>登陆注册</li>
+<li>获取和更新新闻</li>
+<li>收藏新闻</li>
+<li>修改个人信息</li>
+</ol>
+<h2 id="二、系统整体设计"><a href="#二、系统整体设计" class="headerlink" title="二、系统整体设计"></a>二、系统整体设计</h2><p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/image-20210104092832594.png" alt="image-20210104092832594"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/image-20210104092906938.png" alt="image-20210104092906938"></p>
+<h2 id="三、运行截图"><a href="#三、运行截图" class="headerlink" title="三、运行截图"></a>三、运行截图</h2><p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/image-20210104093259955.png" alt="image-20210104093259955"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/image-20210104093314189.png" alt="image-20210104093314189"></p>
+<h4 id="Github地址：https-github-com-LIANYCL-SimpleNews"><a href="#Github地址：https-github-com-LIANYCL-SimpleNews" class="headerlink" title="Github地址：https://github.com/LIANYCL/SimpleNews"></a>Github地址：<a href="https://github.com/LIANYCL/SimpleNews">https://github.com/LIANYCL/SimpleNews</a></h4>]]></content>
+      <categories>
+        <category>项目</category>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>课程设计</tag>
+      </tags>
+  </entry>
 </search>
