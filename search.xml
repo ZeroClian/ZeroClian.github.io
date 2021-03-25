@@ -803,4 +803,67 @@
         <tag>Docker</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MySQL存储引擎——浅谈</title>
+    <url>/posts/ca4da212.html</url>
+    <content><![CDATA[<h1 id="MySQL存储引擎——浅谈"><a href="#MySQL存储引擎——浅谈" class="headerlink" title="MySQL存储引擎——浅谈"></a>MySQL存储引擎——浅谈</h1><ul>
+<li><p>主要的存储引擎有 <strong>InnoDB</strong> 、<strong>MyISAM</strong> 、Memory 、blackhole 、TokuDB 和 MariaDB columnstore。</p>
+</li>
+<li><p>最主流的两个引擎对比，可以看出 InnoDB 引擎的优势很明显。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>区别</th>
+<th>InnoDB</th>
+<th>MyISAM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事务的支持</td>
+<td>支持事务</td>
+<td>不支持事务</td>
+</tr>
+<tr>
+<td>锁粒度</td>
+<td>行锁</td>
+<td>表锁</td>
+</tr>
+<tr>
+<td>并发性</td>
+<td>高并发</td>
+<td>低并发</td>
+</tr>
+<tr>
+<td>select count(*)</td>
+<td>需要扫描全表，统计所有行数</td>
+<td>只需从计数器中读取出保存好的行数即可</td>
+</tr>
+</tbody></table>
+<ul>
+<li>MySQL 数据库是一个<strong>单进程多线程模型</strong>的数据库</li>
+</ul>
+<h2 id="InnoDB-的三大特性"><a href="#InnoDB-的三大特性" class="headerlink" title="InnoDB 的三大特性"></a>InnoDB 的三大特性</h2><ul>
+<li>插入缓存</li>
+</ul>
+<p>影响数据库最主要的性能问题就是 I/O，而插入缓存的作用就是把普通索引上的 DML（如insert,delete,update,select等）操作从随机 I/O变成顺序 I/O，提高 I/O 的效率。其工作原理就是先判断插入的普通索引页是否在缓存池中，如果在直接插入，如果不在就先放到 change buffer 中，然后进行 change buffer 和普通索引的合并操作，这样可以将多个插入合并到一个操作中，一下子提高了普通索引的插入性能。</p>
+<ul>
+<li>两次写</li>
+</ul>
+<p>保证写入的安全性，防止在 MySQL 实例发生宕机时，InnoDB 发生数据页部分页写的问题。</p>
+<ul>
+<li>自适应哈希索引</li>
+</ul>
+<p>InnoDB 存储引擎有一个机制，可以监控索引的搜索，如果 InnoDB 注意到查询可以通过建立哈希索引得到优化，那么就会自动完成这件事。</p>
+<p>这些特性让 InnoDB 存储引擎有了更好的性能和可靠性。</p>
+]]></content>
+      <categories>
+        <category>面试必备</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
 </search>
