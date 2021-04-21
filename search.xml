@@ -105,7 +105,7 @@
 <p>如果我们的切⾯⽐较少，那么两者性能差异不⼤。但是，当切⾯太多的话，最好选择 AspectJ ，它⽐Spring AOP 快很多。</p>
 ]]></content>
       <categories>
-        <category>Spring全家桶</category>
+        <category>面试必备</category>
         <category>Spring</category>
       </categories>
       <tags>
@@ -318,9 +318,9 @@
 <li>隔离性（Isolation）：并发访问数据库时，一个用户的事务不被其他事务所干扰，各种并发事务之间数据库是独立的。</li>
 <li>持久性（Durability）：一个事务被提交后，对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何的影响。</li>
 </ul>
-<h2 id="并发事务带来的问题"><a href="#并发事务带来的问题" class="headerlink" title="并发事务带来的问题"></a>并发事务带来的问题</h2><p>在典型的应⽤程序中，多个事务并发运⾏，经常会操作相同的数据来完成各⾃的任务（多个⽤户对同⼀数据进⾏操作）。并发虽然是必须的，但可能会导致以下的问题。</p>
+<h2 id="并发事务带来的问题"><a href="#并发事务带来的问题" class="headerlink" title="并发事务带来的问题"></a>并发事务带来的问题</h2><p>在典型的应用程序中，多个事务并发运行，经常会操作相同的数据来完成各自的任务（多个用户对同⼀数据进行操作）。并发虽然是必须的，但可能会导致以下的问题。</p>
 <ul>
-<li>脏读（<strong>Dirty read</strong>）:当⼀个事务正在访问数据并且对数据进⾏了修改，⽽这种修改还没有提交到数据库中，这时另外⼀个事务也访问了这个数据，然后使⽤了这个数据。因为这个数据是还没有提交的数据，那么另外⼀个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</li>
+<li>脏读（<strong>Dirty read</strong>）:当⼀个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外⼀个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，那么另外⼀个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</li>
 <li>丢失修改（<strong>Lost to modify</strong>）: 指在⼀个事务读取⼀个数据时，另外⼀个事务也访问了该数据，那么在第⼀个事务中修改了这个数据后，第⼆个事务也修改了这个数据。这样第⼀个事务内的修改结果就被丢失，因此称为丢失修改。 例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=19，事务1的修改被丢失。</li>
 <li>不可重复读（<strong>Unrepeatableread</strong>）: 指在⼀个事务内多次读同⼀数据。在这个事务还没有结束时，另⼀个事务也访问该数据。那么，在第⼀个事务中的两次读数据之间，由于第⼆个事务的修改导致第⼀个事务两次读取的数据可能不太⼀样。这就发⽣了在⼀个事务内两次读到的数据是不⼀样的情况，因此称为不可重复读。</li>
 <li>幻读（<strong>Phantom read</strong>）: 幻读与不可重复读类似。它发⽣在⼀个事务（T1）读取了⼏⾏数据，接着另⼀个并发事务（T2）插⼊了⼀些数据时。在随后的查询中，第⼀个事务（T1）就会发现多了⼀些原本不存在的记录，就好像发⽣了幻觉⼀样，所以称为幻读。</li>
@@ -337,6 +337,7 @@
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/image-20210102165004946.png" alt="隔离级别"></p>
 <p>MySQL InnoDB 存储引擎的默认⽀持的隔离级别是 <strong>REPEATABLE-READ</strong>（可重读）。我们可以通过<code>SELECT @@tx_isolation;</code> 命令来查看。</p>
+<p>InnoDB 存储引擎在<strong>分布式事务</strong>的情况下，一般会用到**SERIALIZABLE(可串行化)**隔离级别。</p>
 ]]></content>
       <categories>
         <category>面试必备</category>
@@ -832,7 +833,7 @@
 </tr>
 <tr>
 <td>并发性</td>
-<td>高并发</td>
+<td>高并发（支持MVCC）</td>
 <td>低并发</td>
 </tr>
 <tr>
@@ -842,7 +843,8 @@
 </tr>
 </tbody></table>
 <ul>
-<li>MySQL 数据库是一个<strong>单进程多线程模型</strong>的数据库</li>
+<li>MySQL 数据库是一个<strong>单进程多线程模型</strong>的数据库。</li>
+<li>5.5版本以前，MyISAM是MySQL的默认数据库，虽然性能极佳，提供了大量特性，包括全文索引、压缩、空间函数等，但是不支持事务以及行级锁，崩溃后无法安全恢复。因此之后的版本引入InnoDB作为默认的存储引擎。</li>
 </ul>
 <h2 id="InnoDB-的三大特性"><a href="#InnoDB-的三大特性" class="headerlink" title="InnoDB 的三大特性"></a>InnoDB 的三大特性</h2><ul>
 <li>插入缓存</li>
@@ -856,7 +858,19 @@
 <li>自适应哈希索引</li>
 </ul>
 <p>InnoDB 存储引擎有一个机制，可以监控索引的搜索，如果 InnoDB 注意到查询可以通过建立哈希索引得到优化，那么就会自动完成这件事。</p>
-<p>这些特性让 InnoDB 存储引擎有了更好的性能和可靠性。</p>
+<ul>
+<li>预读</li>
+</ul>
+<p>InnoDB 中将64个页划分为一个 extent，当一个 extent 中的页，被顺序读超过了多少个，比如50个，这个值是可以通过nnodb_read_ahead_threshold 设置的，那么就会认为顺序读到下一个 extent 的可能性很大，会提前将下一个 extent 中的所有页都加载到 buffer pool 中，这叫线性预读</p>
+<p>如果某一个 extent 中，有多个页被读到，就会认为读到这个 extent 中其他页的可能性也很大，就会把该 extent 中的其他页也都提前读到 buffer pool 中。</p>
+<p>这些特性让 InnoDB 存储引擎有了更好的性能和可靠性。 </p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>MySQL索引使用的数据结构主要有BTree索引和哈希索引。</p>
+<p>当绝大多数需求为单条记录查询时，可以选择哈希索引，查询效率最快；其余场景建议使用BTree索引。</p>
+<p>两种引擎对BTree索引（B+Tree）的实现方式不同：</p>
+<ul>
+<li>MyISAM：B+Tree叶节点的<code>data</code>域存放的是数据记录的地址，在检索的时候，首先按照B+Tree搜索算法搜索索引，如果指定的key存在，则取出其data域值，然后以data域的值为地址读取相应的数据。这被称为“非聚簇索引”。</li>
+<li>InnoDB：其数据文件本身就是索引文件。相比MyISAM，索引文件和数据文件是分离的，其表数据文件本身就是按B+Tree组织的⼀个索引结构，树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。这被称为“聚簇索引（或聚集 索引）”。而其余的索引都作为辅助索引，辅助索引的data域存储相应记录主键的值而不是地址，这也是和MyISAM不同的地方。<strong>在根据主索引搜索时，直接找到key所在的节点即可取出数 据；在根据辅助索引查找时，则需要先取出主键的值，再走一遍主索引。 因此，在设计表的时 候，不建议使用过长的字段作为主键，也不建议使而非单调的字段作为主键，这样会造成主索引频繁分裂。</strong></li>
+</ul>
 ]]></content>
       <categories>
         <category>面试必备</category>
@@ -864,6 +878,67 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ArrayList源码分析</title>
+    <url>/posts/c352a0f3.html</url>
+    <content><![CDATA[<h1 id="ArrayList源码分析"><a href="#ArrayList源码分析" class="headerlink" title="ArrayList源码分析"></a>ArrayList源码分析</h1><p>总所周知，ArrayList的数据结构是基于数组实现，其底层是一个Object数组列表，与我们普通定义的数组不同，它具有动态扩容、数据拷贝等操作。</p>
+<p>接下来从初始化、插入、删除等源码来分析ArrayList是如何具体实现这些操作的</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//默认容量</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//创建Object数组</span></span><br><span class="line">        <span class="keyword">this</span>.elementData = <span class="keyword">new</span> Object[initialCapacity];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;Illegal Capacity: &quot;</span>+</span><br><span class="line">                                           initialCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从源码可以看出，<strong>EMPTY_ELEMENTDATA</strong>是一个定义好的空对象，当无参或者大小为0时，将会得到一个Object[]的空对象。</p>
+<p>常用的构造方式</p>
+<ul>
+<li>普通方式</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">list.add(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">list.add(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">list.add(<span class="string">&quot;c&quot;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Arrays.asList 方式</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList list = <span class="keyword">new</span> ArrayList(Arrays.asList(<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Collections.nCopies 方式</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;(Collections.nCopies(<span class="number">3</span>,<span class="string">&quot;a&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>Collections.nCopies 是集合方法中用于生成多少份某个指定元素的方法。</p>
+<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    elementData[size++] = e;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从源码中，可以看出，插入时分两步：</p>
+<ul>
+<li>第一步：判断容量是否足够，不足则扩容</li>
+<li>第二步：将元素插入，size自增</li>
+</ul>
+<p>扩容源码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureCapacityInternal</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">        minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ensureExplicitCapacity(minCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureExplicitCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length &gt; <span class="number">0</span>)</span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">grow</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line">    <span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    <span class="comment">// minCapacity is usually close to size, so this is a win:</span></span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>核心扩容方法是调用grow方法，扩容后长度为<code> oldCapacity + (oldCapacity &gt;&gt; 1)</code>，即为原来的1.5倍。数组元素的拷贝使用的<code>Arrays.copyOf(elementData, newCapacity)</code>，其底层采用的<code>System.arraycopy</code>。</p>
+<p>指定位置插入同理：</p>
+<ul>
+<li>判断size是否可以插入</li>
+<li>判断插入后是否需要扩容</li>
+<li>数据迁移，把从待插入位置后面的元素顺序往后迁移</li>
+<li>给指定位置赋值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</span><br><span class="line">    rangeCheckForAdd(index);</span><br><span class="line"></span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    System.arraycopy(elementData, index, elementData, index + <span class="number">1</span>,</span><br><span class="line">                     size - index);</span><br><span class="line">    elementData[index] = element;</span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    rangeCheck(index);</span><br><span class="line"></span><br><span class="line">    modCount++;</span><br><span class="line">    E oldValue = elementData(index);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> numMoved = size - index - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (numMoved &gt; <span class="number">0</span>)</span><br><span class="line">        System.arraycopy(elementData, index+<span class="number">1</span>, elementData, index,</span><br><span class="line">                         numMoved);</span><br><span class="line">    elementData[--size] = <span class="keyword">null</span>; <span class="comment">// clear to let GC do its work</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> oldValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>校验是否越界：<code>rangeCheck(index)</code></li>
+<li>计算删除元素的移动长度<code>numMoved</code>，并通过<code>System.arraycopy</code>复制元素给自己</li>
+<li>结尾元素清空，null</li>
+</ul>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><blockquote>
+<p>如果给你一组元素；a、b、c、d、e、f、g，需要你放到 ArrayList 中，但是要求 获取一个元素的时间复杂度都是 O(1)，你怎么处理？</p>
+</blockquote>
+<p>想解决这个问题，就需要知道元素添加到集合中后知道它的位置，而这个位置呢， 其实可以通过哈希值与集合长度与运算，得出存放数据的下标，如下图；</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/image-20210421134406953.png" alt="image-20210421134406953"></p>
+<ul>
+<li>如图就是计算出每一个元素应该存放的位置，这样就可以 O(1)复杂度获取元素。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>面试必备</category>
+        <category>Java基础</category>
+      </categories>
+      <tags>
+        <tag>集合</tag>
       </tags>
   </entry>
 </search>
