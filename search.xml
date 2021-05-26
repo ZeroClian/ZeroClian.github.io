@@ -456,6 +456,33 @@
     
     
     <entry>
+      <title>工作日常优化——steam流</title>
+      <link href="posts/5fddb0d.html"/>
+      <url>posts/5fddb0d.html</url>
+      
+        <content type="html"><![CDATA[<p>逻辑：根据某个对象<code>list</code>集合，获取里面的含最低值的对象</p><p>原代码：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据最低分数获取推送信息</span></span><br><span class="line">List&lt;GetCaReviewsWhichPerformedVO&gt; sortedCollect = collect.stream()</span><br><span class="line">    .sorted(Comparator.comparing(GetCaReviewsWhichPerformedVO::getWhichPerformedItemValue))</span><br><span class="line">    .collect(Collectors.toList());</span><br><span class="line">ContentVO contentVO = learningTimeManager.shareContentByReviewItem(sortedCollect.get(<span class="number">0</span>).getWhichPerformedItemName());</span><br></pre></td></tr></table></figure><p>通过流根据<code>value</code>排序后，使用<code>get(0)</code>获取最小值，若列表为<code>null</code>，可能回出现问题。</p><p>优化后：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据最低分数获取推送信息</span></span><br><span class="line">GetCaReviewsWhichPerformedVO sortedCollect = collect.stream()</span><br><span class="line">    .sorted(Comparator.comparing(GetCaReviewsWhichPerformedVO::getWhichPerformedItemValue))</span><br><span class="line">    .findFirst().orElse(<span class="keyword">new</span> GetCaReviewsWhichPerformedVO());</span><br><span class="line">ContentVO contentVO = learningTimeManager.shareContentByReviewItem(sortedCollect.getWhichPerformedItemName());</span><br></pre></td></tr></table></figure><p>使用<code>findFirst</code>方法获取第一个值，使用<code>orElse</code>对其他情况处理为<code>new</code>一个新的对象</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工作 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Steam </tag>
+            
+            <tag> 优化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>简闻——新闻查看APP</title>
       <link href="posts/c8ced817.html"/>
       <url>posts/c8ced817.html</url>
