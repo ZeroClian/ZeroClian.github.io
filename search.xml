@@ -247,9 +247,9 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
+    <title>文章发布常用配置</title>
     <url>/posts/4a17b156.html</url>
-    <content><![CDATA[<h3 id="文章技巧"><a href="#文章技巧" class="headerlink" title="文章技巧"></a>文章技巧</h3><h4 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h4><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">IDEA常用快捷键</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">工具</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">快捷键</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IDEA</span></span><br><span class="line"><span class="attr">cover:</span> <span class="string">&#x27;https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/idea.png&#x27;</span></span><br><span class="line"><span class="attr">abbrlink:</span> <span class="string">&#x27;566321e7&#x27;</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2021-05-27 17:07:45</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h2 id="一、文章技巧"><a href="#一、文章技巧" class="headerlink" title="一、文章技巧"></a>一、文章技巧</h2><h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">IDEA常用快捷键</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">工具</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">快捷键</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IDEA</span></span><br><span class="line"><span class="attr">cover:</span> <span class="string">&#x27;https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/idea.png&#x27;</span></span><br><span class="line"><span class="attr">abbrlink:</span> <span class="string">&#x27;566321e7&#x27;</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2021-05-27 17:07:45</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
 
 
 <p>哪個英文字母最酷？ <span class="hide-inline"><button type="button" class="hide-button button--animated" style="background-color: #FF7242;color: #fff">查看答案
@@ -257,9 +257,10 @@
 <p>門裏站着一個人? <span class="hide-inline"><button type="button" class="hide-button button--animated" style="">Click
   </button><span class="hide-content">閃</span></span></p>
 <a class="btn-beautify button--animated blue larger" href="https://butterfly.js.org/" 
-  title="Butterfly"><i class="far fa-hand-point-right fa-fw"></i><span>Butterfly</span></a>
+  title="JavaStudys"><i class="far fa-hand-point-right fa-fw"></i><span>JavaStudys</span></a>
 
-
+<a class="btn-beautify button--animated blue" href="https://butterfly.js.org/" 
+  title="JavaStudys"><i class="far fa-hand-point-right fa-fw"></i><span>JavaStudys</span></a>
 
 <ul>
 <li>饼图</li>
@@ -284,7 +285,6 @@
         <category>Hexo</category>
       </categories>
       <tags>
-        <tag>测试</tag>
         <tag>模板</tag>
       </tags>
   </entry>
