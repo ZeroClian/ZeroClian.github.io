@@ -545,15 +545,18 @@
 <li>安装需要的软件包，yum-util 提供 yum-config-manager 功能，另外两个是 devicemapper 驱动依赖的<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure></li>
 <li>设置 yum 源为阿里云<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure></li>
 <li>安装 docker<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install docker-ce</span><br></pre></td></tr></table></figure></li>
-<li>查看安装后的版本<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">docker -v</span><br></pre></td></tr></table></figure>
+<li>查看安装后的版本<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">docker -v</span><br><span class="line">or</span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
 <h1 id="设置-ustc-的镜像"><a href="#设置-ustc-的镜像" class="headerlink" title="设置 ustc 的镜像"></a>设置 ustc 的镜像</h1><ol>
-<li><p>编辑文件：<code>vi /etc/docker/daemon.json</code></p>
-</li>
-<li><p>添加如下内容</p>
-</li>
+<li>编辑文件：<code>vi /etc/docker/daemon.json</code></li>
+</ol>
+<blockquote>
+<p>显示无权限，编辑不了，则先创建该空文件</p>
+</blockquote>
+<ol>
+<li>添加如下内容</li>
 </ol>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
