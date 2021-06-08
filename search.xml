@@ -541,37 +541,28 @@
     <url>/posts/9683a4f7.html</url>
     <content><![CDATA[<h1 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h1><p>基于 Centos 7 系统的安装步骤</p>
 <ol>
-<li>系统版本需要3.0以上</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看版本</span></span><br><span class="line">uname -r</span><br><span class="line"><span class="comment"># 3.10.0-1160.25.1.el7.x86_64</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>卸载旧版本</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
-<ol start="3">
+<li>系统版本需要3.0以上<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看版本</span></span><br><span class="line">uname -r</span><br><span class="line"><span class="comment"># 3.10.0-1160.25.1.el7.x86_64</span></span><br></pre></td></tr></table></figure></li>
+<li>卸载旧版本<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure></li>
 <li>yum 包更新到最新<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></table></figure></li>
 <li>安装需要的软件包，yum-util 提供 yum-config-manager 功能，另外两个是 devicemapper 驱动依赖的<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure></li>
 <li>设置 yum 源为阿里云<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure></li>
-<li>安装 docker</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install docker-ce</span><br></pre></td></tr></table></figure>
-<ol start="7">
-<li>安装成功，查看版本</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker -v</span><br><span class="line">or</span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
+<li>安装 docker<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install docker-ce</span><br></pre></td></tr></table></figure></li>
+<li>安装成功，查看版本<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker -v</span><br><span class="line">or</span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
 
 
+</li>
+</ol>
 <h1 id="二、设置镜像加速器"><a href="#二、设置镜像加速器" class="headerlink" title="二、设置镜像加速器"></a>二、设置镜像加速器</h1><h2 id="1-ustc镜像加速器"><a href="#1-ustc镜像加速器" class="headerlink" title="1. ustc镜像加速器"></a>1. ustc镜像加速器</h2><ol>
 <li>编辑文件：<code>vi /etc/docker/daemon.json</code></li>
 </ol>
 <blockquote>
 <p>显示无权限，编辑不了，则先创建该空文件</p>
 </blockquote>
-<ol>
-<li>添加如下内容</li>
+<ol start="2">
+<li>添加如下内容<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-阿里云镜像加速器"><a href="#2-阿里云镜像加速器" class="headerlink" title="2. 阿里云镜像加速器"></a>2. 阿里云镜像加速器</h2></li>
 </ol>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="2-阿里云镜像加速器"><a href="#2-阿里云镜像加速器" class="headerlink" title="2. 阿里云镜像加速器"></a>2. 阿里云镜像加速器</h2><p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/%E9%98%BF%E9%87%8C%E4%BA%91docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/%E9%98%BF%E9%87%8C%E4%BA%91docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F.png"></p>
 <p>通过修改daemon配置文件<code>/etc/docker/daemon.json</code>来使用加速器</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line"></span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://bb5nwkjh.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line"></span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 
@@ -771,11 +762,12 @@
 <p>如果共享的是多级目录，可能会出现权限不足的提示，这是因为 CentOS 7 中的安全模块 selinux 把权限禁掉了，因此需要添加参数 –privileged=true 来解决挂载的目录没用权限的问题。</p>
 <h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/docker%E5%91%BD%E4%BB%A4.png"></p>
 <h1 id="五、应用部署"><a href="#五、应用部署" class="headerlink" title="五、应用部署"></a>五、应用部署</h1><h2 id="1-MySQL-部署"><a href="#1-MySQL-部署" class="headerlink" title="1. MySQL 部署"></a>1. MySQL 部署</h2><ol>
-<li>拉取镜像<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull centos/mysql-57-centos7</span><br></pre></td></tr></table></figure></li>
-<li>创建容器<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -id --name=tensquare_mysql -p 33306:3306 -e MYSQL_ROOT_PASSWORD=123456 centos/mysql-57-centos7</span><br></pre></td></tr></table></figure>
-<code>-e</code> 代表添加环境变量 MYSQL_ROOT_PASSWORD 是 root 用户的登陆密码<br><code>-p</code> 代表端口映射</li>
-</ol>
-<ol start="3">
+<li><p>拉取镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull centos/mysql-57-centos7</span><br></pre></td></tr></table></figure></li>
+<li><p>创建容器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -id --name=tensquare_mysql -p 33306:3306 -e MYSQL_ROOT_PASSWORD=123456 centos/mysql-57-centos7</span><br></pre></td></tr></table></figure>
+<p><code>-e</code> 代表添加环境变量 MYSQL_ROOT_PASSWORD 是 root 用户的登陆密码<br><code>-p</code> 代表端口映射</p>
+</li>
 <li><p>进入 mysql 容器</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it tensquare_mysql /bin/bash</span><br></pre></td></tr></table></figure></li>
 <li><p>登陆 mysql</p>
