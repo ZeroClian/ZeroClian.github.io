@@ -539,17 +539,29 @@
   <entry>
     <title>Docker 详解</title>
     <url>/posts/9683a4f7.html</url>
-    <content><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>基于 Centos 7 系统的安装步骤</p>
+    <content><![CDATA[<h1 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h1><p>基于 Centos 7 系统的安装步骤</p>
 <ol>
+<li>系统版本需要3.0以上</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看版本</span></span><br><span class="line">uname -r</span><br><span class="line"><span class="comment"># 3.10.0-1160.25.1.el7.x86_64</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>卸载旧版本</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
+<ol start="3">
 <li>yum 包更新到最新<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></table></figure></li>
 <li>安装需要的软件包，yum-util 提供 yum-config-manager 功能，另外两个是 devicemapper 驱动依赖的<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure></li>
 <li>设置 yum 源为阿里云<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure></li>
-<li>安装 docker<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install docker-ce</span><br></pre></td></tr></table></figure></li>
-<li>查看安装后的版本<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">docker -v</span><br><span class="line">or</span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>安装 docker</li>
 </ol>
-<h1 id="设置-ustc-的镜像"><a href="#设置-ustc-的镜像" class="headerlink" title="设置 ustc 的镜像"></a>设置 ustc 的镜像</h1><ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install docker-ce</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>安装成功，查看版本</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker -v</span><br><span class="line">or</span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="二、设置镜像加速器"><a href="#二、设置镜像加速器" class="headerlink" title="二、设置镜像加速器"></a>二、设置镜像加速器</h1><h2 id="1-ustc镜像加速器"><a href="#1-ustc镜像加速器" class="headerlink" title="1. ustc镜像加速器"></a>1. ustc镜像加速器</h2><ol>
 <li>编辑文件：<code>vi /etc/docker/daemon.json</code></li>
 </ol>
 <blockquote>
@@ -559,8 +571,12 @@
 <li>添加如下内容</li>
 </ol>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-阿里云镜像加速器"><a href="#2-阿里云镜像加速器" class="headerlink" title="2. 阿里云镜像加速器"></a>2. 阿里云镜像加速器</h2><p><img src="https://cdn.jsdelivr.net/gh/ZeroClian/picture/img/%E9%98%BF%E9%87%8C%E4%BA%91docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F.png"></p>
+<p>通过修改daemon配置文件<code>/etc/docker/daemon.json</code>来使用加速器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line"></span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://bb5nwkjh.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line"></span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 
-<h1 id="Docker-的启动与停止"><a href="#Docker-的启动与停止" class="headerlink" title="Docker 的启动与停止"></a>Docker 的启动与停止</h1><ol>
+
+<h1 id="三、Docker-的启动与停止"><a href="#三、Docker-的启动与停止" class="headerlink" title="三、Docker 的启动与停止"></a>三、Docker 的启动与停止</h1><ol>
 <li>启动 docker：<code>systemctl start docker</code></li>
 <li>停止 docker：<code>systemctl stop docker</code></li>
 <li>重启 docker：<code>systemctl restart docker</code></li>
@@ -569,7 +585,14 @@
 <li>查看 docker 概要信息：<code>docker info</code></li>
 <li>查看帮助文档：<code>docker --help</code></li>
 </ol>
-<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h2 id="镜像相关命令"><a href="#镜像相关命令" class="headerlink" title="镜像相关命令"></a>镜像相关命令</h2><h3 id="查看镜像-docker-images"><a href="#查看镜像-docker-images" class="headerlink" title="查看镜像: docker images"></a>查看镜像: <code>docker images</code></h3><p>这些镜像都是存储在 Docker 宿主机的 /var/lib/docker 目录下</p>
+<h1 id="四、常用命令"><a href="#四、常用命令" class="headerlink" title="四、常用命令"></a>四、常用命令</h1><h2 id="1-帮助文档"><a href="#1-帮助文档" class="headerlink" title="1. 帮助文档"></a>1. 帮助文档</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker version			<span class="comment"># docker版本信息</span></span><br><span class="line">docker info				<span class="comment"># docker系统信息</span></span><br><span class="line">docker 命令 --<span class="built_in">help</span> 	   <span class="comment"># 帮助命令</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 文档地址：<a href="https://docs.docker.com/reference/">https://docs.docker.com/reference/</a></p>
+<p> 所有命令都可在文档查到详细信息</p>
+</blockquote>
+<h2 id="2-镜像相关命令"><a href="#2-镜像相关命令" class="headerlink" title="2. 镜像相关命令"></a>2. 镜像相关命令</h2><p>镜像就好比一个模板（类），可以通过这个镜像创建一个或多个容器服务。</p>
+<h3 id="查看镜像"><a href="#查看镜像" class="headerlink" title="查看镜像"></a>查看镜像</h3><p><code>docker images [OPTIONS]</code></p>
+<p>这些镜像都是存储在 Docker 宿主机的 /var/lib/docker 目录下</p>
 <table>
 <thead>
 <tr>
@@ -598,7 +621,11 @@
 <td align="center">镜像大小</td>
 </tr>
 </tbody></table>
-<h3 id="搜索镜像-docker-search-镜像名称"><a href="#搜索镜像-docker-search-镜像名称" class="headerlink" title="搜索镜像:docker search 镜像名称"></a>搜索镜像:<code>docker search 镜像名称</code></h3><p>通过网络查找需要的镜像</p>
+<blockquote>
+<p><strong>删除资源</strong>：<code>rm -rf /var/lib/docker </code></p>
+</blockquote>
+<h3 id="搜索镜像"><a href="#搜索镜像" class="headerlink" title="搜索镜像"></a>搜索镜像</h3><p><code>docker search 镜像名称 [OPTIONS]</code></p>
+<p>通过网络查找需要的镜像</p>
 <table>
 <thead>
 <tr>
@@ -627,14 +654,44 @@
 <td align="center">自动构建，表示该镜像由 Docker Hub 自动构建流程创建的</td>
 </tr>
 </tbody></table>
-<h3 id="拉取镜像-docker-pull-镜像名称"><a href="#拉取镜像-docker-pull-镜像名称" class="headerlink" title="拉取镜像:docker pull 镜像名称"></a>拉取镜像:<code>docker pull 镜像名称</code></h3><h3 id="删除镜像-docker-rmi-镜像ID"><a href="#删除镜像-docker-rmi-镜像ID" class="headerlink" title="删除镜像:docker rmi 镜像ID"></a>删除镜像:<code>docker rmi 镜像ID</code></h3><h3 id="删除所有镜像：docker-rmi-39-docker-images-q-39"><a href="#删除所有镜像：docker-rmi-39-docker-images-q-39" class="headerlink" title="删除所有镜像：docker rmi &#39;docker images -q&#39;"></a>删除所有镜像：<code>docker rmi &#39;docker images -q&#39;</code></h3><h2 id="容器相关命令"><a href="#容器相关命令" class="headerlink" title="容器相关命令"></a>容器相关命令</h2><h3 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h3><ol>
+<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><p><code>docker pull 镜像名称</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@ZeroClian ~]# docker pull mysql</span><br><span class="line">Using default tag: latest			# 如果不写tag，默认是 latest</span><br><span class="line">latest: Pulling from library/mysql</span><br><span class="line">69692152171a: Pull complete 		# 分层下载，docker image的核心，联合文件系统</span><br><span class="line">1651b0be3df3: Pull complete </span><br><span class="line">951da7386bc8: Pull complete </span><br><span class="line">0f86c95aa242: Pull complete </span><br><span class="line">37ba2d8bd4fe: Pull complete </span><br><span class="line">6d278bb05e94: Pull complete </span><br><span class="line">497efbd93a3e: Pull complete </span><br><span class="line">f7fddf10c2c2: Pull complete </span><br><span class="line">16415d159dfb: Pull complete </span><br><span class="line">0e530ffc6b73: Pull complete </span><br><span class="line">b0a4a1a77178: Pull complete </span><br><span class="line">cd90f92aa9ef: Pull complete </span><br><span class="line">Digest: sha256:d50098d7fcb25b1fcb24e2d3247cae3fc55815d64fec640dc395840f8fa80969  # 签名</span><br><span class="line">Status: Downloaded newer image for mysql:latest</span><br><span class="line">docker.io/library/mysql:latest 		  # 真实地址</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 两者等价</span></span><br><span class="line">docker pull mysql</span><br><span class="line">docker pull docker.io/library/mysql:latest </span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载5.7版本</span></span><br><span class="line">docker pull mysql:5.7</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>联合文件系统：是一种分层、轻量级并且高性能的文件系统，它支持对文件系统的修改作为一次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系统下。</p>
+<p>联合文件系统是 Docker 镜像的基础。镜像可以通过分层来进行继承，基于基础镜像（没有父镜像），可以制作各种具体的应用镜像。不同 Docker 容器就可以共享一些基础的文件系统层，同时再加上自己独有的改动层，大大提高了存储的效率。</p>
+</blockquote>
+<h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><p><code>docker rmi 镜像ID</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 删除镜像，不询问</span><br><span class="line">docker rmi -f 镜像id</span><br><span class="line"># 删除全部的镜像</span><br><span class="line">docker rmi -f $(docker images -aq)</span><br><span class="line">docker rmi &#39;docker images -q&#39;</span><br></pre></td></tr></table></figure>
+<h3 id="可选项"><a href="#可选项" class="headerlink" title="可选项"></a>可选项</h3><table>
+<thead>
+<tr>
+<th align="center">可选项</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-a / - -all</td>
+<td align="center">列出所有镜像</td>
+</tr>
+<tr>
+<td align="center">-q /- - quiet</td>
+<td align="center">只显示镜像的id</td>
+</tr>
+<tr>
+<td align="center">- - filter=[条件]</td>
+<td align="center">筛选满足条件的结果</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 搜索出 mysql 镜像stars大于3000</span><br><span class="line">docker search mysql --filter&#x3D;stars&#x3D;3000</span><br></pre></td></tr></table></figure>
+<h2 id="3-容器相关命令"><a href="#3-容器相关命令" class="headerlink" title="3. 容器相关命令"></a>3. 容器相关命令</h2><p>有了镜像才可以创建容器</p>
+<h3 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h3><ol>
 <li>查看运行中的容器：<code>docker ps</code></li>
 <li>查看所有容器：<code>docker ps -a</code></li>
 <li>查看最后一次运行的容器：<code>docker ps -l</code></li>
 <li>查看停止的容器：<code>docker ps -f status=exited</code></li>
 </ol>
 <h3 id="创建与启动容器"><a href="#创建与启动容器" class="headerlink" title="创建与启动容器"></a>创建与启动容器</h3><ul>
-<li>命令：<code>docker run</code><table>
+<li>命令：<code>docker run [options] image</code><table>
 <thead>
 <tr>
 <th align="center">命令</th>
@@ -670,40 +727,40 @@
 <tr>
 <td align="center">-p</td>
 <td align="center">表示端口映射，前者是宿主机端口，后者是容器内的映射端口，可以使用多个 -p 做多个端口映射</td>
-<td align="center"></td>
+<td align="center">-p 8080:8080</td>
 </tr>
 </tbody></table>
 </li>
 </ul>
 <ol>
 <li><p>交互式方式创建容器</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -it --name=容器名称 镜像名称:标签 /bin/bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -it --name=容器名称 镜像名称:标签 /bin/bash</span><br><span class="line"><span class="comment"># 测试</span></span><br><span class="line">[root@ZeroClian ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY   TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">centos       latest    300e315adb2f   6 months ago   209MB</span><br><span class="line">[root@ZeroClian ~]<span class="comment"># docker run -it --name=centos7 centos /bin/bash</span></span><br><span class="line">[root@b8ac772ea12c /]<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+<blockquote>
 <p>退出当前容器：<code>exit</code></p>
+<p>容器不停止退出：<code>Ctrl + P + Q</code></p>
+</blockquote>
 </li>
 <li><p>守护式方式创建容器</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//创建</span><br><span class="line">docker run -id --name=容器名称 镜像名称:标签</span><br><span class="line">//登陆</span><br><span class="line">docker <span class="built_in">exec</span> -it 容器名称（或容器ID）/bin/bash</span><br></pre></td></tr></table></figure>
-
-</li>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">//创建</span><br><span class="line">docker run -id --name=容器名称 镜像名称:标签</span><br><span class="line">//登陆</span><br><span class="line">docker exec -it 容器名称（或容器ID）/bin/bash</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="停止与启动容器"><a href="#停止与启动容器" class="headerlink" title="停止与启动容器"></a>停止与启动容器</h3><ul>
+<p><strong>停止与启动容器</strong></p>
+<ul>
 <li>停止容器：<code>docker stop 容器名称（或容器ID）</code></li>
 <li>启动容器：<code>docker start 容器名称（或容器ID）</code></li>
 </ul>
-<h3 id="文件拷贝"><a href="#文件拷贝" class="headerlink" title="文件拷贝"></a>文件拷贝</h3><ul>
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker rm 容器id	# 不能删除正在运行的容器，-f 强制删除</span><br><span class="line">docker rm -f $(docker ps -aq)	# 删除所有容器</span><br><span class="line">docker  ps -a -q | xargs docker rm -f	# 删除所有容器</span><br></pre></td></tr></table></figure>
+<h3 id="查看容器IP地址"><a href="#查看容器IP地址" class="headerlink" title="查看容器IP地址"></a>查看容器IP地址</h3><ul>
+<li>查看容器运行的各种数据：<code>docker inspect 容器名称（容器ID）</code></li>
+<li>直接输出IP地址：<code>docker inspect --format=&#39;&#123;&#123;.NetworkSettings.IPaddress&#125;&#125;&#39; 容器名称（容器ID）</code></li>
+</ul>
+<h2 id="4-其他常用命令"><a href="#4-其他常用命令" class="headerlink" title="4. 其他常用命令"></a>4. 其他常用命令</h2><h3 id="文件拷贝"><a href="#文件拷贝" class="headerlink" title="文件拷贝"></a>文件拷贝</h3><ul>
 <li>拷贝到容器：<code>docker cp 需要拷贝的文件或目录 容器名称:容器目录</code></li>
 <li>从容器中拷贝：<code>docker cp 容器名称:容器目录 需要拷贝的文件或目录</code></li>
 </ul>
 <h3 id="目录挂载"><a href="#目录挂载" class="headerlink" title="目录挂载"></a>目录挂载</h3><p>在创建容器的时候，将宿主机的目录与容器内的目录进行映射，从而可以通过修改宿主机某个目录的文件去影响容器。<br>在创建容器时，添加 -v 宿主机目录 : 容器目录，如：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -id -v /usr/<span class="built_in">local</span>/myhtml:/usr/<span class="built_in">local</span>/myhtml --name=mycentos centos:7</span><br></pre></td></tr></table></figure>
 <p>如果共享的是多级目录，可能会出现权限不足的提示，这是因为 CentOS 7 中的安全模块 selinux 把权限禁掉了，因此需要添加参数 –privileged=true 来解决挂载的目录没用权限的问题。</p>
-<h3 id="查看容器IP地址"><a href="#查看容器IP地址" class="headerlink" title="查看容器IP地址"></a>查看容器IP地址</h3><ul>
-<li>查看容器运行的各种数据：<code>docker inspect 容器名称（容器ID）</code></li>
-<li>直接输出IP地址：<code>docker inspect --format=&#39;&#123;&#123;.NetworkSettings.IPaddress&#125;&#125;&#39; 容器名称（容器ID）</code></li>
-</ul>
-<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><ul>
-<li>删除指定容器：<code>docker rm 容器名称（容器ID）</code></li>
-</ul>
-<h1 id="应用部署"><a href="#应用部署" class="headerlink" title="应用部署"></a>应用部署</h1><h2 id="MySQL-部署"><a href="#MySQL-部署" class="headerlink" title="MySQL 部署"></a>MySQL 部署</h2><ol>
+<h1 id="五、应用部署"><a href="#五、应用部署" class="headerlink" title="五、应用部署"></a>五、应用部署</h1><h2 id="1-MySQL-部署"><a href="#1-MySQL-部署" class="headerlink" title="1. MySQL 部署"></a>1. MySQL 部署</h2><ol>
 <li>拉取镜像<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull centos/mysql-57-centos7</span><br></pre></td></tr></table></figure></li>
 <li>创建容器<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -id --name=tensquare_mysql -p 33306:3306 -e MYSQL_ROOT_PASSWORD=123456 centos/mysql-57-centos7</span><br></pre></td></tr></table></figure>
 <code>-e</code> 代表添加环境变量 MYSQL_ROOT_PASSWORD 是 root 用户的登陆密码<br><code>-p</code> 代表端口映射</li>
@@ -717,37 +774,37 @@
 <p>连接宿主机 IP ，指定端口为 33306</p>
 </li>
 </ol>
-<h2 id="tomcat部署"><a href="#tomcat部署" class="headerlink" title="tomcat部署"></a>tomcat部署</h2><ol>
+<h2 id="2-tomcat部署"><a href="#2-tomcat部署" class="headerlink" title="2. tomcat部署"></a>2. tomcat部署</h2><ol>
 <li>拉取镜像：<code>docker pull tomcat:7-jre7</code></li>
 <li>创建容器<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -di --name=mytomcat -p 9000:8080 -v /usr/<span class="built_in">local</span>/webapps:/usr/<span class="built_in">local</span>/tomcat/webapps tomcat:7-jre7</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
-<h2 id="Nginx部署"><a href="#Nginx部署" class="headerlink" title="Nginx部署"></a>Nginx部署</h2><ol>
+<h2 id="3-Nginx部署"><a href="#3-Nginx部署" class="headerlink" title="3. Nginx部署"></a>3. Nginx部署</h2><ol>
 <li>拉取镜像：<code>docker pull nginx</code></li>
 <li>创建容器<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -di --name=mynginx -p 80:80 nginx</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
-<h2 id="Redis部署"><a href="#Redis部署" class="headerlink" title="Redis部署"></a>Redis部署</h2><ol>
+<h2 id="4-Redis部署"><a href="#4-Redis部署" class="headerlink" title="4. Redis部署"></a>4. Redis部署</h2><ol>
 <li>拉取镜像：<code>docker pull redis</code></li>
 <li>创建容器<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -di --name=myredis -p 6379:6379 redis</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
-<h1 id="迁移与备份"><a href="#迁移与备份" class="headerlink" title="迁移与备份"></a>迁移与备份</h1><ol>
+<h1 id="六、迁移与备份"><a href="#六、迁移与备份" class="headerlink" title="六、迁移与备份"></a>六、迁移与备份</h1><ol>
 <li>容器保存为镜像<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker commit mynginx mynginx_i</span><br></pre></td></tr></table></figure></li>
 <li>镜像备份<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker save -o mynginx.tar mynginx_i</span><br></pre></td></tr></table></figure></li>
 <li>镜像恢复与迁移<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker load -i mynginx.tar</span><br></pre></td></tr></table></figure>
     <code>-i</code> 输入的文件</li>
 </ol>
-<h1 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h1><p>Dockerfile 是由一系列命令和参数构成的脚本，这些命令应用于基础镜像并最终创建一个新的镜像。</p>
+<h1 id="七、Dockerfile"><a href="#七、Dockerfile" class="headerlink" title="七、Dockerfile"></a>七、Dockerfile</h1><p>Dockerfile 是由一系列命令和参数构成的脚本，这些命令应用于基础镜像并最终创建一个新的镜像。</p>
 <ol>
 <li>对于开发人员：可以为开发团队提供一个完全一致的开发环境</li>
 <li>对于测试时人员：可以直接拿开发时所构建的镜像或通过 Dockerfile 文件构建一个新的镜像开始工作</li>
 <li>对于运维人员：在部署时，可以实现应用的无缝移植</li>
 </ol>
-<h2 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h2><table>
+<h2 id="1-常用命令"><a href="#1-常用命令" class="headerlink" title="1. 常用命令"></a>1. 常用命令</h2><table>
 <thead>
 <tr>
 <th align="center">命令</th>
@@ -783,7 +840,7 @@
 <td align="center">设置工作目录</td>
 </tr>
 </tbody></table>
-<h2 id="使用脚本创建镜像"><a href="#使用脚本创建镜像" class="headerlink" title="使用脚本创建镜像"></a>使用脚本创建镜像</h2><ol>
+<h2 id="2-使用脚本创建镜像"><a href="#2-使用脚本创建镜像" class="headerlink" title="2. 使用脚本创建镜像"></a>2. 使用脚本创建镜像</h2><ol>
 <li><p>创建 Dockerfile 文件 <code>vi Dockerfile</code>（以 jdk 为例）</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FROM centos:7</span><br><span class="line">MAINTAINER ZeroClian</span><br><span class="line"><span class="comment">#切换工作目录</span></span><br><span class="line">WORKDIR /usr</span><br><span class="line">RUN mkdir /usr/<span class="built_in">local</span>/java</span><br><span class="line">ADD jdk......gz /usr/<span class="built_in">local</span>/java/</span><br><span class="line"><span class="comment">#配置Java环境变量</span></span><br><span class="line">ENV JAVA_HOME /usr/<span class="built_in">local</span>/java/jdkxxxxx</span><br><span class="line">ENV JRE_HOME <span class="variable">$JAVA_HOME</span>/jre</span><br><span class="line">ENV CLASSPATH <span class="variable">$JAVA_HOME</span>/bin/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$JRE_HOME</span>/lib:<span class="variable">$CLASSPATH</span></span><br><span class="line">ENV PATH <span class="variable">$JAVA_HOME</span>/bin/:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></li>
 <li><p>构建命令：<code>docker build -t=&#39;jdk1.8&#39; .</code></p>
@@ -792,7 +849,7 @@
 <li><p>查看镜像是否建立完成：<code>docker images</code></p>
 </li>
 </ol>
-<h1 id="Docker-私有仓库"><a href="#Docker-私有仓库" class="headerlink" title="Docker 私有仓库"></a>Docker 私有仓库</h1><h2 id="建立私有仓库与配置"><a href="#建立私有仓库与配置" class="headerlink" title="建立私有仓库与配置"></a>建立私有仓库与配置</h2><ol>
+<h1 id="八、Docker-私有仓库"><a href="#八、Docker-私有仓库" class="headerlink" title="八、Docker 私有仓库"></a>八、Docker 私有仓库</h1><h2 id="1-建立私有仓库与配置"><a href="#1-建立私有仓库与配置" class="headerlink" title="1. 建立私有仓库与配置"></a>1. 建立私有仓库与配置</h2><ol>
 <li><p>拉取私有仓库镜像：<code>docker pull registry</code></p>
 </li>
 <li><p>启动私有仓库容器：<code>docker run -di --name=registry -p 5000:5000 registry</code></p>
@@ -806,7 +863,7 @@
 <li><p>重启 docker 服务：<code>systemctl restart docker</code></p>
 </li>
 </ol>
-<h2 id="镜像上传至私有仓库"><a href="#镜像上传至私有仓库" class="headerlink" title="镜像上传至私有仓库"></a>镜像上传至私有仓库</h2><ol>
+<h2 id="2-镜像上传至私有仓库"><a href="#2-镜像上传至私有仓库" class="headerlink" title="2. 镜像上传至私有仓库"></a>2. 镜像上传至私有仓库</h2><ol>
 <li>标记此镜像为私有仓库的镜像<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker tag jdk1.8 192.168.63.128:5000/jdk1.8</span><br></pre></td></tr></table></figure></li>
 <li>上传标记的镜像<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker push 192.168.63.128:5000/jdk1.8</span><br></pre></td></tr></table></figure></li>
 </ol>
