@@ -784,10 +784,12 @@
 </ol>
 <h2 id="3-Nginx部署"><a href="#3-Nginx部署" class="headerlink" title="3. Nginx部署"></a>3. Nginx部署</h2><ol>
 <li>拉取镜像：<code>docker pull nginx</code></li>
-<li>创建容器<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -di --name=mynginx -p 80:80 nginx</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>创建容器<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -di --name=mynginx -p 80:80 nginx</span><br></pre></td></tr></table></figure></li>
+<li>进入并查看配置文件</li>
 </ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@ZeroClian ~]<span class="comment"># docker exec -it mynginx /bin/bash</span></span><br><span class="line">root@96fd34d42785:/<span class="comment"># whereis nginx</span></span><br><span class="line">nginx: /usr/sbin/nginx /usr/lib/nginx /etc/nginx /usr/share/nginx</span><br><span class="line">root@96fd34d42785:/<span class="comment"># cd /etc/nginx</span></span><br><span class="line">root@96fd34d42785:/etc/nginx<span class="comment"># ls</span></span><br><span class="line">conf.d  fastcgi_params  mime.types  modules  nginx.conf  scgi_params  uwsgi_params</span><br></pre></td></tr></table></figure>
+
+
 <h2 id="4-Redis部署"><a href="#4-Redis部署" class="headerlink" title="4. Redis部署"></a>4. Redis部署</h2><ol>
 <li>拉取镜像：<code>docker pull redis</code></li>
 <li>创建容器<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -di --name=myredis -p 6379:6379 redis</span><br></pre></td></tr></table></figure>
@@ -1356,6 +1358,50 @@
       </categories>
       <tags>
         <tag>快捷键</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis常用命令</title>
+    <url>/posts/bae4ff13.html</url>
+    <content><![CDATA[<h2 id="Hash命令"><a href="#Hash命令" class="headerlink" title="Hash命令"></a>Hash命令</h2><p>Redis中的Hash类型可以看成具有String key 和String Value的map容器，所以非常适合用于存储值对象的信息，每一个hash可以存储4294967295个键值对。</p>
+<p>Hash 特点：占用的磁盘空间极少</p>
+<h3 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h3><ul>
+<li><code>hset key field value</code>：为指定的key设置field/value对</li>
+<li><code>hsetnx key field value</code>：为指定的key设置field/value对，如果存在就失败</li>
+<li><code>hmset key field value[field value2...]</code>：设置key中的多个field/value</li>
+</ul>
+<h3 id="取值"><a href="#取值" class="headerlink" title="取值"></a>取值</h3><ul>
+<li><p><code>hget key field</code>：返回指定的key中的field的值</p>
+</li>
+<li><p><code>hmget key field1 field2...</code>：获取key中多个field的值</p>
+</li>
+<li><p><code>hgetall key</code>：获取key中的所有field-value</p>
+</li>
+</ul>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
+<li><p><code>hdel key field</code>：删除指定的key的field值（如何hash中没有field了，hash将会自动删除）</p>
+</li>
+<li><p><code>del key</code>：删除整个hash</p>
+</li>
+</ul>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><ul>
+<li><p><code>hincrby key field increment</code>：increment 增加1</p>
+</li>
+<li><p><code>hexists key field</code>：返回指定key的field是否存在，存在为1，不存在为0</p>
+</li>
+<li><p><code>hlen key</code>：获取key所包含的field的数量</p>
+</li>
+<li><p><code>hkeys key</code>：获取所有字段</p>
+</li>
+<li><p><code>hvals key</code>：获取所有value值</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>命令</tag>
       </tags>
   </entry>
 </search>
